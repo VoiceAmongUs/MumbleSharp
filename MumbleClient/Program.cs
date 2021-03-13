@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading;
 using MumbleSharp;
 using MumbleSharp.Model;
@@ -70,7 +71,10 @@ namespace MumbleClient
             Thread updateLoopThread = new Thread(updateLoopThreadStart) {IsBackground = true};
             updateLoopThread.Start();
 
-            var r = new MicrophoneRecorder(protocol);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                _ = new MicrophoneRecorder(protocol);
+            }
 
             //When localuser is set it means we're really connected
             while (!protocol.ReceivedServerSync)

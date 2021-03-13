@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;net472</TargetFrameworks>
     <Version>1.2.0</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>MumbleSharp is a mumble protocol implementation in C#.
@@ -17,6 +17,7 @@ For more info on Mumble please visit https://www.mumble.info/</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>mumblesharp.png</PackageIcon>
     <PackageIconUrl />
+    <PackageId>js6pak.MumbleSharp</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -54,10 +55,7 @@ For more info on Mumble please visit https://www.mumble.info/</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Audio\Codecs\Opus\Libs\32bit\opus.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Audio\Codecs\Opus\Libs\64bit\opus.dll">
+    <None Update="Audio\Codecs\Opus\Libs\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

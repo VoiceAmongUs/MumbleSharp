@@ -24,6 +24,7 @@
 // 
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -37,38 +38,62 @@ namespace MumbleSharp.Audio.Codecs.Opus
     {
         static NativeMethods()
         {
-            IntPtr image;
-            if (PlatformDetails.IsMac)
+            var searchDirectories = new List<string>
             {
-                image = LibraryLoader.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", "32bit", "libopus.dylib"));
-            }
-            else if (PlatformDetails.IsWindows)
+                AppDomain.CurrentDomain.BaseDirectory,
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", Environment.Is64BitProcess ? "64bit" : "32bit")
+            };
+
+            foreach (var searchDirectory in searchDirectories)
             {
-                if (!Environment.Is64BitProcess)
-                    image = LibraryLoader.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", "32bit", "opus.dll"));
+                string libraryPath;
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    libraryPath = Path.Combine(searchDirectory, "libopus.so");
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    libraryPath = Path.Combine(searchDirectory, "libopus.dylib");
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    libraryPath = Path.Combine(searchDirectory, "opus.dll");
+                }
                 else
-                    image = LibraryLoader.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", "64bit", "opus.dll"));
-            }
-            else
-            {
-                image = LibraryLoader.Load("libopus.so.0");
-				if (image.Equals(IntPtr.Zero))
-                    image = LibraryLoader.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", "libopus.so"));
+                {
+                    throw new PlatformNotSupportedException();
+                }
+
+                if (File.Exists(libraryPath))
+                {
+                    Load(libraryPath);
+                    return;
+                }
             }
 
-            if (image != IntPtr.Zero)
+            throw new FileNotFoundException("Couldn't find opus library");
+        }
+
+        private static void Load(string libraryPath)
+        {
+            var image = LibraryLoader.Load(libraryPath);
+
+            if (image == IntPtr.Zero)
             {
-                var type = typeof(NativeMethods);
-                foreach (var member in type.GetFields(BindingFlags.Static | BindingFlags.NonPublic))
-                {
-                    var methodName = member.Name;
-                    if (methodName == "opus_encoder_ctl_out") methodName = "opus_encoder_ctl";
-                    var fieldType = member.FieldType;
-                    var ptr = LibraryLoader.ResolveSymbol(image, methodName);
-                    if (ptr == IntPtr.Zero)
-                        throw new Exception(string.Format("Could not resolve symbol \"{0}\"", methodName));
-                    member.SetValue(null, Marshal.GetDelegateForFunctionPointer(ptr, fieldType));
-                }
+                throw new Exception("Couldn't load opus library");
+            }
+
+            var type = typeof(NativeMethods);
+            foreach (var member in type.GetFields(BindingFlags.Static | BindingFlags.NonPublic))
+            {
+                var methodName = member.Name;
+                if (methodName == "opus_encoder_ctl_out") methodName = "opus_encoder_ctl";
+                var fieldType = member.FieldType;
+                var ptr = LibraryLoader.ResolveSymbol(image, methodName);
+                if (ptr == IntPtr.Zero)
+                    throw new Exception(string.Format("Could not resolve symbol \"{0}\"", methodName));
+                member.SetValue(null, Marshal.GetDelegateForFunctionPointer(ptr, fieldType));
             }
         }
 
@@ -118,7 +143,7 @@ namespace MumbleSharp.Audio.Codecs.Opus
         // ReSharper restore UnassignedField.Compiler
         // ReSharper restore InconsistentNaming
 
-        public enum Ctl
+        internal enum Ctl
         {
             SetBitrateRequest = 4002,
             GetBitrateRequest = 4003,
@@ -126,7 +151,7 @@ namespace MumbleSharp.Audio.Codecs.Opus
             GetInbandFecRequest = 4013
         }
 
-        public enum OpusErrors
+        internal enum OpusErrors
         {
             Ok = 0,
             BadArgument = -1,

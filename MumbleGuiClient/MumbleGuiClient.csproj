@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Authors>martindevans, Meetsch</Authors>
     <Product>MumbleSharp</Product>
@@ -17,7 +17,12 @@ For more info on MumbleSharp please visit https://github.com/martindevans/Mumble
     <RepositoryType>Git</RepositoryType>
     <PackageTags>MumbleSharp Mumble voip voice chat windows desktop demo</PackageTags>
   </PropertyGroup>
-
+  <!-- Allow to build winforms app on linux (use wine to run) -->
+  <ItemGroup>
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App" IsWindowsOnly="false" />
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false" />
+    <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WindowsForms" IsWindowsOnly="false" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>

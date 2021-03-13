@@ -31,8 +31,7 @@ namespace MumbleSharp
     /// <summary>
     /// Library loader.
     /// </summary>
-    //internal class LibraryLoader
-    public class LibraryLoader
+    internal class LibraryLoader
     {
         static System.Collections.Generic.List<IntPtr> libraries = new System.Collections.Generic.List<IntPtr>();
 
@@ -67,7 +66,7 @@ namespace MumbleSharp
         /// <returns></returns>
         internal static IntPtr Load(string fileName)
         {
-            IntPtr lib = PlatformDetails.IsWindows ? LoadLibrary(fileName) : dlopen(fileName, 1);
+            IntPtr lib = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? LoadLibrary(fileName) : dlopen(fileName, 1);
             libraries.Add(lib);
 
             return lib;
@@ -75,7 +74,7 @@ namespace MumbleSharp
 
         internal static bool Free(IntPtr module)
         {
-            if(PlatformDetails.IsWindows)
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 return FreeLibrary(module);
 
             dlclose(module);
@@ -90,7 +89,7 @@ namespace MumbleSharp
         /// <returns></returns>
         internal static IntPtr ResolveSymbol(IntPtr image, string symbol)
         {
-            return PlatformDetails.IsWindows ? GetProcAddress(image, symbol) : dlsym(image, symbol);
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? GetProcAddress(image, symbol) : dlsym(image, symbol);
         }
     }
 }
