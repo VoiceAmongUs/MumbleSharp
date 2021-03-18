@@ -49,7 +49,8 @@ namespace MumbleSharp.Audio.Codecs.Opus
                 AppDomain.CurrentDomain.BaseDirectory,
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", Environment.Is64BitProcess ? "64bit" : "32bit")
             };
-            if(additionalSearchDirectories != null)
+
+            if (additionalSearchDirectories != null)
             {
                 searchDirectories.AddRange(additionalSearchDirectories);
             }
