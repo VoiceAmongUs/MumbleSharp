@@ -34,15 +34,26 @@ namespace MumbleSharp.Audio.Codecs.Opus
     /// <summary>
     /// Wraps the Opus API.
     /// </summary>
-    internal class NativeMethods
+    public class NativeMethods
     {
+
         static NativeMethods()
+        {
+            LoadLibrary();
+        }
+
+        public static bool LoadLibrary(List<string> additionalSearchDirectories = null)
         {
             var searchDirectories = new List<string>
             {
                 AppDomain.CurrentDomain.BaseDirectory,
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Audio", "Codecs", "Opus", "Libs", Environment.Is64BitProcess ? "64bit" : "32bit")
             };
+
+            if (additionalSearchDirectories != null)
+            {
+                searchDirectories.AddRange(additionalSearchDirectories);
+            }
 
             foreach (var searchDirectory in searchDirectories)
             {
@@ -68,11 +79,11 @@ namespace MumbleSharp.Audio.Codecs.Opus
                 if (File.Exists(libraryPath))
                 {
                     Load(libraryPath);
-                    return;
+                    return true;
                 }
             }
 
-            throw new FileNotFoundException("Couldn't find opus library");
+            return false;
         }
 
         private static void Load(string libraryPath)
