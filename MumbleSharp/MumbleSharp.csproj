@@ -17,7 +17,7 @@ For more info on Mumble please visit https://www.mumble.info/</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>mumblesharp.png</PackageIcon>
     <PackageIconUrl />
-    <PackageId>js6pak.MumbleSharp</PackageId>
+    <PackageId>VoiceAmongUs.MumbleSharp</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
