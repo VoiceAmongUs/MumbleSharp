@@ -35,4 +35,8 @@ For more info on MumbleSharp please visit https://github.com/martindevans/Mumble
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NAudio.WinMM" Version="2.0.0" />
+  </ItemGroup>
+
 </Project>

@@ -33,6 +33,9 @@ For more info on MumbleSharp please visit https://github.com/martindevans/Mumble
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NAudio.WinForms" Version="2.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MumbleSharp\MumbleSharp.csproj" />
