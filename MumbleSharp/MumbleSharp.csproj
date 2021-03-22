@@ -4,15 +4,14 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0;net472</TargetFrameworks>
     <Version>1.2.0</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>MumbleSharp is a mumble protocol implementation in C#.
-For more info on Mumble please visit https://www.mumble.info/</Description>
-    <Copyright>Copyright © 2020</Copyright>
-    <PackageProjectUrl>https://github.com/martindevans/MumbleSharp</PackageProjectUrl>
+    <Description>MumbleSharp is a Mumble protocol implementation in C#. For more info on Mumble please visit https://www.mumble.info/</Description>
+    <Copyright>Copyright © 2021</Copyright>
+    <PackageProjectUrl>https://github.com/VoiceAmongUs/MumbleSharp</PackageProjectUrl>
     <ApplicationIcon>mumblesharp.ico</ApplicationIcon>
-    <RepositoryUrl>https://github.com/martindevans/MumbleSharp</RepositoryUrl>
+    <RepositoryUrl>https://github.com/VoiceAmongUs/MumbleSharp</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>Mumble voip voice chat</PackageTags>
-    <Authors>martindevans, Meetsch</Authors>
+    <Authors>martindevans, Meetsch, Christoph Honal</Authors>
     <Company />
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>mumblesharp.png</PackageIcon>
