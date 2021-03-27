@@ -15,6 +15,15 @@ namespace MumbleSharp.Audio.Codecs.Speex
             get { throw new NotImplementedException(); }
         }
 
+        public int EncodingBitrate
+        {
+            get
+            {
+                return 0;
+            }
+            set { }
+        }
+
         public byte[] Encode(ArraySegment<byte> pcm)
         {
             throw new NotImplementedException();

@@ -53,6 +53,21 @@ namespace MumbleSharp.Audio.Codecs.Opus
             }
         }
 
+        /// <summary>
+        /// Gets or sets the bitrate setting of the encoding.
+        /// </summary>
+        public int EncodingBitrate 
+        { 
+            get
+            { 
+                return _encoder?.Bitrate ?? 0; 
+            }
+            set 
+            { 
+               if(_encoder != null) _encoder.Bitrate = value;
+            }
+        }
+
         public byte[] Encode(ArraySegment<byte> pcm)
         {
             var samples = pcm.Count / sizeof(ushort);

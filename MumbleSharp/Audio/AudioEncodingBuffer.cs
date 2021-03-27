@@ -154,6 +154,21 @@ namespace MumbleSharp.Audio
         }
 
         /// <summary>
+        /// Gets or sets the bitrate setting of the encoding.
+        /// </summary>
+        public int Bitrate 
+        { 
+            get
+            { 
+                return _codecs?.EncodingBitrate ?? 0; 
+            }
+            set 
+            { 
+               if(_codecs != null) _codecs.EncodingBitrate = value;
+            }
+        }
+
+        /// <summary>
         /// PCM data targetted at a specific person
         /// </summary>
         private struct TargettedSpeech

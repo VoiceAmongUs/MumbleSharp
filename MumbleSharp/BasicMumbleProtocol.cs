@@ -65,6 +65,7 @@ namespace MumbleSharp
         private byte _audioSampleBits;
         private byte _audioSampleChannels;
         private ushort _audioFrameSize;
+        private int _audioBitrate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BasicMumbleProtocol"/> class.
@@ -73,12 +74,14 @@ namespace MumbleSharp
         /// <param name="audioSampleBits">The sample bit depth.</param>
         /// <param name="audioSampleChannels">The sample channels (1 for mono, 2 for stereo).</param>
         /// <param name="audioFrameSize">Size of the frame in samples.</param>
-        public BasicMumbleProtocol(int audioSampleRate = Constants.DEFAULT_AUDIO_SAMPLE_RATE, byte audioSampleBits = Constants.DEFAULT_AUDIO_SAMPLE_BITS, byte audioSampleChannels = Constants.DEFAULT_AUDIO_SAMPLE_CHANNELS, ushort audioFrameSize = Constants.DEFAULT_AUDIO_FRAME_SIZE)
+        /// <param name="audioBitrate">The encoding bitrate.</param>
+        public BasicMumbleProtocol(int audioSampleRate = Constants.DEFAULT_AUDIO_SAMPLE_RATE, byte audioSampleBits = Constants.DEFAULT_AUDIO_SAMPLE_BITS, byte audioSampleChannels = Constants.DEFAULT_AUDIO_SAMPLE_CHANNELS, ushort audioFrameSize = Constants.DEFAULT_AUDIO_FRAME_SIZE, int audioBitrate = Constants.DEFAULT_AUDIO_BITRATE)
         {
             _audioSampleRate = audioSampleRate;
             _audioSampleBits = audioSampleBits;
             _audioSampleChannels = audioSampleChannels;
             _audioFrameSize = audioFrameSize;
+            _audioBitrate = audioBitrate;
         }
 
         /// <summary>
@@ -451,6 +454,7 @@ namespace MumbleSharp
             if (Connection.VoiceSupportEnabled)
             {
                 _encodingBuffer = new AudioEncodingBuffer(_audioSampleRate, _audioSampleBits, _audioSampleChannels, _audioFrameSize);
+                _encodingBuffer.Bitrate = _audioBitrate;
                 _encodingThread.Start();
             }
 

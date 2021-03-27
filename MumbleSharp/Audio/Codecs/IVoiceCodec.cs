@@ -24,5 +24,10 @@ namespace MumbleSharp.Audio.Codecs
         /// <param name="pcm"></param>
         /// <returns></returns>
         byte[] Encode(ArraySegment<byte> pcm);
+
+        /// <summary>
+        /// Gets or sets the bitrate setting of the encoding
+        /// </summary>
+        int EncodingBitrate { get; set; }
     }
 }

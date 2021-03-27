@@ -14,6 +14,15 @@ namespace MumbleSharp.Audio.Codecs.CeltAlpha
         {
             get { throw new NotImplementedException(); }
         }
+        
+        public int EncodingBitrate
+        {
+            get
+            {
+                return 0;
+            }
+            set { }
+        }
 
         public byte[] Encode(ArraySegment<byte> pcm)
         {

@@ -45,5 +45,27 @@ namespace MumbleSharp.Audio
                     throw new ArgumentOutOfRangeException("codec");
             }
         }
+
+        /// <summary>
+        /// Gets or sets the bitrate setting of the encoding.
+        /// </summary>
+        public int EncodingBitrate 
+        { 
+            get
+            {
+                if (_alpha.Value.EncodingBitrate != 0) return _alpha.Value.EncodingBitrate;
+                if (_beta.Value.EncodingBitrate != 0) return _beta.Value.EncodingBitrate;
+                if (_speex.Value.EncodingBitrate != 0) return _speex.Value.EncodingBitrate;
+                if (_opus.Value.EncodingBitrate != 0) return _opus.Value.EncodingBitrate;
+                return 0;
+            }
+            set 
+            { 
+                _alpha.Value.EncodingBitrate = value;
+                _beta.Value.EncodingBitrate = value;
+                _speex.Value.EncodingBitrate = value;
+                _opus.Value.EncodingBitrate = value;
+            }
+        }
     }
 }
